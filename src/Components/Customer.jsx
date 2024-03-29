@@ -9,7 +9,6 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import SearchBar from './CustomerSearch';
-import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
@@ -109,7 +108,7 @@ const fetchCustomers = async () => {
       };
 
       const response = await axios.delete(
-        `${apiUrl}api/customer/delete_customer/${selectedCustomerId}`,
+        `http://146.190.164.174:4000/api/customer/delete_customer/${selectedCustomerId}`,
         { headers: headers }
       );
 
@@ -146,10 +145,10 @@ const fetchCustomers = async () => {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'end', marginBottom: '30px' }}>
+    <div className="manage-buttons">
+    <div className='d-flex justify-content-end' style={{  marginBottom: '20px' }}>
         <Button
           onClick={handleAddCustomer}
-          startIcon={<AddIcon />}
           sx={{
             backgroundColor: '#00A95A',
             color:'white',
@@ -165,6 +164,8 @@ const fetchCustomers = async () => {
     <h1>Customer</h1>
     <SearchBar />
   </div>
+    </div>
+  
 
   {loading ? ( 
     <CircularProgress className='d-flex align-item-center' style={{ margin: 'auto', color:"#00A95A"}} />

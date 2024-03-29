@@ -1,7 +1,8 @@
 import { Outlet } from "react-router";
 import { styled } from "@mui/material";
-import ClippedDrawer from "../Components/ClippedDrawer";
-import AccountMenu from "../Components/LogOut";
+// import ClippedDrawer from "../Components/ClippedDrawer";
+
+import ResponsiveDrawer from "../Components/ClippedDrawer";
 
 
 const APP_BAR_MOBILE = 64;
@@ -30,9 +31,8 @@ const DashBoardLayOut = () => {
     return (
         <>
             <StyledRoot>
-                <ClippedDrawer />
+                <ResponsiveDrawer />
                 <Main>
-                <AccountMenu />
                     <Outlet />
                 </Main>
             </StyledRoot>
