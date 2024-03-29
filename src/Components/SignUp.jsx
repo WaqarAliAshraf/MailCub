@@ -82,7 +82,7 @@ const SignUp = () => {
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 setSuccessMessage('Account created successfully!');
-                navigate('/loginpage');
+                navigate('/');
             } else {
                 console.error('Error fetching data:', response.statusText);
             }

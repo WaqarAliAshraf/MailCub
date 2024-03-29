@@ -10,6 +10,8 @@ import DashboarLayout from '../Layouts/DashboardLayout';
 import ForgotPassword from './ForgotPassword';
 import SupportTickets from './SupportTickets';
 import Transactions from './Transactions';
+import AddCustomer from './AddCustomer';
+import EditCustomer from './EditCustomer';
 
 const AppRoutes = () => {
 return (
@@ -20,10 +22,12 @@ return (
     <Route path="/customer" element={<Customer />} />
     <Route path="/supportTickets" element={<SupportTickets />} />
     <Route path="/transactions" element={<Transactions />} />
+    <Route path='/addcustomer' element={<AddCustomer/>} />
+    <Route path="/edit-customer/:customerId" element={<EditCustomer />} />
     <Route path="*" element={<NotFound />}/>
     </Route>
     <Route path="/" element={<AuthenticationLayout />}>
-    <Route path="/loginpage" element={<LoginPage />} />
+    <Route path="/" element={<LoginPage />} />
     <Route path="signup" element={<SignUp />} />
     <Route path='forgetpassword' element={<ForgotPassword />} />
     <Route path="404" element={<NotFound />}/>

@@ -1,6 +1,8 @@
 import { Outlet } from "react-router";
 import { styled } from "@mui/material";
 import ClippedDrawer from "../Components/ClippedDrawer";
+import AccountMenu from "../Components/LogOut";
+
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
@@ -9,7 +11,7 @@ const StyledRoot = styled('div')({
     display: 'flex',
     minHeight: '100%',
     overflow: 'hidden',
-  });
+});
 
 const Main = styled('div')(({ theme }) => ({
     flexGrow: 1,
@@ -26,15 +28,16 @@ const Main = styled('div')(({ theme }) => ({
 
 const DashBoardLayOut = () => {
     return (
-    <>
-        <StyledRoot>
-            <ClippedDrawer />
-            <Main>
-                <Outlet />
-            </Main>
-        </StyledRoot>
+        <>
+            <StyledRoot>
+                <ClippedDrawer />
+                <Main>
+                <AccountMenu />
+                    <Outlet />
+                </Main>
+            </StyledRoot>
 
-    </>);
+        </>);
 }
 
 export default DashBoardLayOut;
