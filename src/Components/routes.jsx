@@ -58,7 +58,6 @@ const AppRoutes = () => {
         </Route>
       </Routes>
 
-
     </div>
   );
 };

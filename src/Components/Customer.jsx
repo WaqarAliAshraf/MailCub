@@ -36,9 +36,9 @@ const columns = [
 
 export default function StickyHeadTable() {
   const [page, setPage] = useState(0);
-
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [customers, setCustomers] = useState([]);
+  const [totalCustomers, setTotalCustomers] = useState(0);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedCustomerId, setSelectedCustomerId] = useState(null);
   const [deleteSuccess, setDeleteSuccess] = useState(false);
@@ -46,6 +46,15 @@ export default function StickyHeadTable() {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [customerData, setCustomerData] = useState(null);
   const navigate = useNavigate();
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   useEffect(() => {
     fetchCustomers();
@@ -64,6 +73,7 @@ export default function StickyHeadTable() {
         { headers: headers }
       );
       setCustomers(response.data.customer);
+      setTotalCustomers(response.data.count);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching customers:', error.response);
@@ -104,14 +114,7 @@ export default function StickyHeadTable() {
     }
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+ 
 
   const handleConfirmDelete = (customerId) => {
     setSelectedCustomerId(customerId);
@@ -123,13 +126,12 @@ export default function StickyHeadTable() {
   };
 
   const handleOpenEdit = (customerId) => {
-    const selectedCustomer = customers.find(customer => customer.user._id === customerId);
+    const selectedCustomer = customers.find(customer => customer && customer.user && customer.user._id === customerId);
     if (selectedCustomer) {
       setOpenEditDialog(true);
       setCustomerData(selectedCustomer);
       console.log(selectedCustomer, "data--")
-    }
-    else {
+    } else {
       console.log("Customer not found")
     }
   };
@@ -179,21 +181,21 @@ export default function StickyHeadTable() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {customers.map((row) => (
+                {customers && customers.length > 0 && customers.map((row) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
                     {columns.map((column) => (
                       <TableCell key={column.id} align={column.align}>
-                        {column.id === 'email' ? row.user.email : row[column.id]}
+                        {row && column.id === 'email' ? (row.user && row.user.email) : (row && row[column.id])}
                       </TableCell>
                     ))}
                     <TableCell align="right">
                       <DeleteIcon
-                        onClick={() => handleConfirmDelete(row.user._id)}
+                        onClick={() => handleConfirmDelete(row && row.user && row.user._id)}
                         color="error"
                       />
                       <EditIcon
                         color="primary"
-                        onClick={() => handleOpenEdit(row.user._id)}
+                        onClick={() => handleOpenEdit(row && row.user && row.user._id)}
                       />
                     </TableCell>
                   </TableRow>
@@ -202,9 +204,9 @@ export default function StickyHeadTable() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+            rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={customers.length}
+            count={customers.length ? totalCustomers : 0}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
