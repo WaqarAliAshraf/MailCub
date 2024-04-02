@@ -8,6 +8,10 @@ const Dashboard = () => {
     const [verifiedDomains, setVerifiedDomains] = useState(10);
     const [unverifiedDomains, setUnverifiedDomains] = useState(7);
     const [totalUser, setTotalUser] = useState(0);
+
+// for env
+
+    const apiUrl = process.env.REACT_APP_API_URL;
    
 
 
@@ -21,7 +25,7 @@ const Dashboard = () => {
             const headers = {
               'x-sh-auth': token,
           };
-            const response = await axios.post(`http://146.190.164.174:4000/api/customer/get_customers`,{} ,{ headers: headers });
+            const response = await axios.post(`${apiUrl}api/customer/get_customers`,{} ,{ headers: headers });
             setTotalUser(response.data.customer.length);
             console.log("successful",response.data)
         } catch (error) {

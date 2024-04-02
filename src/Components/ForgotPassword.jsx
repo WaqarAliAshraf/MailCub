@@ -10,6 +10,7 @@ import axios from 'axios';
 
 const ForgotPassword = () => {
 const [loading, setLoading] = useState(false);
+const apiUrl = process.env.REACT_APP_API_URL;
 const [resetForm, setResetForm] = useState({
 email: '',
 password: '',
@@ -36,7 +37,7 @@ email: email,
 password: password,
 confirm_password: confirm_password
 };
-const response = await axios.post("http://146.190.164.174:4000/api/app_api/reset_password", reqObj);
+const response = await axios.post(`${apiUrl}api/app_api/reset_password`, reqObj);
 if (response.status === 200) {
 setResetSuccess(true);
 } else {

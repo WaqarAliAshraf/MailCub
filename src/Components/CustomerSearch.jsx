@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField'; // Import TextField from '@mui/
 
 const SearchBar = ({ fetchData }) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const handleSearch = async () => {
         try {
@@ -11,7 +12,7 @@ const SearchBar = ({ fetchData }) => {
             const headers = {
                 'x-sh-auth': token,
             };
-            const response = await axios.get(`http://146.190.164.174:4000/api/customer/search_customer`, {}, { headers: headers });
+            const response = await axios.get(`${apiUrl}api/customer/search_customer`, {}, { headers: headers });
             console.log('Search Response:', response.data);
             fetchData(response.data);
         } catch (error) {

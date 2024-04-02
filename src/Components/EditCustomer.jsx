@@ -15,6 +15,8 @@ const EditCustomer = ({ customerData }) => {
     const [successAlert, setSuccessAlert] = useState(false);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+   const apiUrl = process.env.REACT_APP_API_URL;
+
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -33,7 +35,7 @@ const EditCustomer = ({ customerData }) => {
             };
 
             const response = await axios.put(
-                `http://146.190.164.174:4000/api/customer/edit_customer_by_admin/${customerData.user._id}`,
+                `${apiUrl}api/customer/edit_customer_by_admin/${customerData.user._id}`,
                 {
                     first_name: firstName,
                     last_name: lastName,

@@ -46,6 +46,7 @@ export default function StickyHeadTable() {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [customerData, setCustomerData] = useState(null);
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -68,7 +69,7 @@ export default function StickyHeadTable() {
       };
 
       const response = await axios.post(
-        `http://146.190.164.174:4000/api/customer/get_customers?page=${page}&limit=${rowsPerPage}`,
+        `${apiUrl}api/customer/get_customers?page=${page}&limit=${rowsPerPage}`,
         {},
         { headers: headers }
       );
@@ -97,7 +98,7 @@ export default function StickyHeadTable() {
       };
 
       const response = await axios.delete(
-        `http://146.190.164.174:4000/api/customer/delete_customer/${selectedCustomerId}`,
+        `${apiUrl}api/customer/delete_customer/${selectedCustomerId}`,
         { headers: headers }
       );
 

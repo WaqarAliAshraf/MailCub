@@ -24,7 +24,7 @@ const AddCustomer = () => {
     const [successAlert, setSuccessAlert] = useState(false);
     const [errorAlert, setErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    // const apiUrl = process.env.REACT_APP_API_URL;
+    const apiUrl = process.env.REACT_APP_API_URL;
 
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -43,7 +43,7 @@ const AddCustomer = () => {
 
         event.preventDefault();
         try {
-            const response = await axios.post(`http://146.190.164.174:4000/api/customer/signup_customer`, {
+            const response = await axios.post(`${apiUrl}api/customer/signup_customer`, {
                 first_name: firstName,
                 last_name: lastName,
                 email: email,
