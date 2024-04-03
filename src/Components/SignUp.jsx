@@ -79,7 +79,7 @@ const SignUp = () => {
         const headers = { "Content-Type": "application/json" };
 
         try {
-            const response = await axios.post(`${apiUrl} api/admin/signup_admin`, reqObj, { headers });
+            const response = await axios.post(`${apiUrl}api/admin/signup_admin`, reqObj, { headers });
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 setSuccessMessage('Account created successfully!');
@@ -111,7 +111,7 @@ const SignUp = () => {
                                 <h1>Get started with a Forever Free plan</h1>
                                 <p>Sign up in seconds. No credit card required.</p>
                                 <form onSubmit={handleSignUp}>
-                                    <TextField label="First Name" name="firstName" type="text" sx={{ mt: 2, width: '50ch' }} 
+                                    <TextField label="First Name" name="firstName" type="text" sx={{ mt: 2, width: '50ch' }}
                                         onChange={handleInputChange}
                                         error={!!errors.firstName}
                                         helperText={errors.firstName}
@@ -121,7 +121,7 @@ const SignUp = () => {
                                         error={!!errors.lastName}
                                         helperText={errors.lastName}
                                         required />
-                                    <TextField label="Email" name="email" type="email" sx={{ mt: 2, width: '50ch' }} 
+                                    <TextField label="Email" name="email" type="email" sx={{ mt: 2, width: '50ch' }}
                                         onChange={handleInputChange}
                                         error={!!errors.email}
                                         helperText={errors.email}

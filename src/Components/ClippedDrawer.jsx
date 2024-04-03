@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -26,6 +26,12 @@ const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const handleItemClick = (index) => {
+    setActiveIndex(index);
+  };
+
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -55,34 +61,38 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {[
-          <NavLink activeClassName='is-active' to="/dashboard">Dashboard</NavLink>,
-          <Link to="/customer">Customer</Link>,
-          <Link to="/supportTickets">Support Tickets(17)</Link>,
-          <Link to="transactions">Transactions</Link>
-        ].map((text, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton component={Link} to={index === 0 ? "/dashboard" : (index === 1 ? "/customer" : (index === 2 ? "/supportTickets" : "/transactions"))}>
-              <ListItemIcon>
-                {index === 0 ?
-                  <SpaceDashboardIcon /> : (index === 1 ?
-                    <Person2Icon /> : (index === 2 ?
-                      <SupportAgentIcon /> :
-                      <AccountBalanceIcon />
-                    )
-                  )
-                }
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-
+          { text: 'Dashboard', to: '/dashboard', icon: <SpaceDashboardIcon /> },
+          { text: 'Customer', to: '/customer', icon: <Person2Icon /> },
+          { text: 'Support Tickets(17)', to: '/supportTickets', icon: <SupportAgentIcon /> },
+          { text: 'Transactions', to: '/transactions', icon: <AccountBalanceIcon /> }
+        ].map((item, index) => (
+          <Link key={index} to={item.to} >
+            <ListItem disablePadding>
+              <ListItemButton
+                component="div"
+                onClick={() => handleItemClick(index)}
+                style={{
+                  backgroundColor: activeIndex === index ? '#e0e0e0' : 'transparent',
+                  display: 'flex',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text}  />
+                </div>
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Divider />
     </div>
   );
 
-  
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -97,7 +107,7 @@ function ResponsiveDrawer(props) {
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
-            keepMounted: true, 
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },

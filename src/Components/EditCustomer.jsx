@@ -64,7 +64,7 @@ const EditCustomer = ({ customerData }) => {
     };
 
     const handleCancel = (event) => {
-        event.preventDefault(); // Prevent the default action of the cancel button
+        event.preventDefault(); 
     };
 
     return (
@@ -78,9 +78,9 @@ const EditCustomer = ({ customerData }) => {
                                 type="text" variant="outlined" value={formData.firstName} onChange={handleInputChange} required
                                 style={{ marginBottom: '30px' }} />
                             <TextField fullWidth name="email" className="email" id="outlined-basic" label="Email" type="email"
-                                variant="outlined" value={formData.email} disabled // Add disabled prop here
+                                variant="outlined" value={formData.email} disabled 
                                 style={{ marginBottom: '30px' }} />
-                            <Autocomplete fullWidth options={['Software', 'Healthcare', 'Education']} // Your suggestion list
+                            <Autocomplete fullWidth options={['Software', 'Healthcare', 'Education']} 
                                 renderInput={(params) =>
                                     <TextField {...params} label="Industry Type" variant="outlined" />}
                                 value={formData.industryType}
@@ -96,6 +96,7 @@ const EditCustomer = ({ customerData }) => {
                                 style={{ marginBottom: '30px' }} />
                             <TextField fullWidth name='phoneNumber' className="phoneNumber" id="outlined-basic"
                                 label="phoneNumber" type="number" variant="outlined" value={formData.phoneNumber}
+                                disabled
                                 onChange={handleInputChange} required style={{ marginBottom: '30px' }} />
                         </div>
                     </div>

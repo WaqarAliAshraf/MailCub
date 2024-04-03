@@ -46,6 +46,7 @@ export default function StickyHeadTable() {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [customerData, setCustomerData] = useState(null);
   const navigate = useNavigate();
+  
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleChangePage = (event, newPage) => {
@@ -115,7 +116,7 @@ export default function StickyHeadTable() {
     }
   };
 
- 
+
 
   const handleConfirmDelete = (customerId) => {
     setSelectedCustomerId(customerId);
@@ -205,7 +206,7 @@ export default function StickyHeadTable() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[1, 2, 3, 5, 10]}
             component="div"
             count={customers.length ? totalCustomers : 0}
             rowsPerPage={rowsPerPage}
@@ -274,3 +275,6 @@ export default function StickyHeadTable() {
     </>
   );
 }
+
+
+
