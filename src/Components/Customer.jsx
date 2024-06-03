@@ -24,6 +24,7 @@ import EditCustomerForm from './EditCustomer';
 import EditIcon from '@mui/icons-material/Edit';
 
 const columns = [
+  { id: 'number', label: '#', minWidth: 100 },
   { id: '_id', label: 'ID', minWidth: 170 },
   { id: 'first_name', label: 'First Name', minWidth: 170 },
   { id: 'last_name', label: 'Last Name', minWidth: 170 },
@@ -46,7 +47,7 @@ export default function StickyHeadTable() {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [customerData, setCustomerData] = useState(null);
   const navigate = useNavigate();
-  
+
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleChangePage = (event, newPage) => {
@@ -116,8 +117,6 @@ export default function StickyHeadTable() {
     }
   };
 
-
-
   const handleConfirmDelete = (customerId) => {
     setSelectedCustomerId(customerId);
     setOpenDeleteDialog(true);
@@ -166,56 +165,59 @@ export default function StickyHeadTable() {
         </div>
       </div>
 
-      {loading ? (
-        <CircularProgress className='d-flex align-item-center' style={{ margin: 'auto', color: "#00A95A" }} />
-      ) : (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                      {column.label}
-                    </TableCell>
-                  ))}
-                  <TableCell align="right">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {customers && customers.length > 0 && customers.map((row) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
+      <div className="table">
+        {loading ? (
+          <CircularProgress className='d-flex align-item-center' style={{ margin: 'auto', color: "#00A95A" }} />
+        ) : (
+          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
                     {columns.map((column) => (
-                      <TableCell key={column.id} align={column.align}>
-                        {row && column.id === 'email' ? (row.user && row.user.email) : (row && row[column.id])}
+                      <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                        {column.label}
                       </TableCell>
                     ))}
-                    <TableCell align="right">
-                      <DeleteIcon
-                        onClick={() => handleConfirmDelete(row && row.user && row.user._id)}
-                        color="error"
-                      />
-                      <EditIcon
-                        color="primary"
-                        onClick={() => handleOpenEdit(row && row.user && row.user._id)}
-                      />
-                    </TableCell>
+                    <TableCell align="right">Actions</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[1, 2, 3, 5, 10]}
-            component="div"
-            count={customers.length ? totalCustomers : 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      )}
+                </TableHead>
+                <TableBody>
+                  {customers && customers.length > 0 && customers.map((row, index) => (
+                    <TableRow hover role="checkbox"  key={row._id}>
+                      <TableCell align="left">{page * rowsPerPage + index + 1}</TableCell>
+                      {columns.slice(1).map((column) => (
+                        <TableCell key={column.id} align={column.align}>
+                          {row && column.id === 'email' ? (row.user && row.user.email) : (row && row[column.id])}
+                        </TableCell>
+                      ))}
+                      <TableCell align="right">
+                        <DeleteIcon
+                          onClick={() => handleConfirmDelete(row && row.user && row.user._id)}
+                          color="error"
+                        />
+                        <EditIcon
+                          color="primary"
+                          onClick={() => handleOpenEdit(row && row.user && row.user._id)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[1, 2, 3, 5, 10]}
+              component="div"
+              count={customers.length ? totalCustomers : 0}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        )}
+      </div>
 
       <Dialog
         open={openDeleteDialog}
@@ -275,6 +277,3 @@ export default function StickyHeadTable() {
     </>
   );
 }
-
-
-

@@ -26,11 +26,16 @@ const drawerWidth = 240;
 function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const [activeIndex, setActiveIndex] = useState(null);
+  // const [activeIndex, setActiveIndex] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleItemClick = (index) => {
-    setActiveIndex(index);
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
   };
+
+  // const handleItemClick = (index) => {
+  //   setActiveIndex(index);
+  // };
 
 
   const handleDrawerClose = () => {
@@ -60,34 +65,40 @@ function ResponsiveDrawer(props) {
       </div>
       <Divider />
       <List>
-        {[
-          { text: 'Dashboard', to: '/dashboard', icon: <SpaceDashboardIcon /> },
-          { text: 'Customer', to: '/customer', icon: <Person2Icon /> },
-          { text: 'Support Tickets(17)', to: '/supportTickets', icon: <SupportAgentIcon /> },
-          { text: 'Transactions', to: '/transactions', icon: <AccountBalanceIcon /> }
-        ].map((item, index) => (
-          <Link key={index} to={item.to} >
-            <ListItem disablePadding>
-              <ListItemButton
-                component="div"
-                onClick={() => handleItemClick(index)}
-                style={{
-                  backgroundColor: activeIndex === index ? '#e0e0e0' : 'transparent',
-                  display: 'flex',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <ListItemIcon>
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={item.text}  />
-                </div>
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        ))}
-      </List>
+      {[
+        { text: 'Dashboard', to: '/dashboard', icon: <SpaceDashboardIcon /> },
+        { text: 'Customer', to: '/customer', icon: <Person2Icon /> },
+        { text: 'Support Tickets(17)', to: '/supportTickets', icon: <SupportAgentIcon /> },
+        { text: 'Transactions', to: '/transactions', icon: <AccountBalanceIcon /> }
+      ].map((item, index) => (
+        <ListItem key={index} disablePadding>
+          <ListItemButton
+            component={index === 0 ? NavLink : Link} 
+            to={item.to}
+            selected={selectedIndex === index} 
+            onClick={(event) => handleListItemClick(event, index)} 
+            sx={{
+              '&.Mui-selected': {
+                color: '#00A95A',
+              },
+              '&:hover': {
+                '& .MuiListItemIcon-root': {
+                  color: '#00A95A',
+                },
+                '& .MuiListItemText-primary': {
+                  color: '#00A95A',
+                },
+              },
+            }}
+          >
+            <ListItemIcon>
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItemButton>
+        </ListItem>
+      ))}
+    </List>
       <Divider />
     </div>
   );

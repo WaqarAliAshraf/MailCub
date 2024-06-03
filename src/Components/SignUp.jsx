@@ -104,7 +104,7 @@ const SignUp = () => {
         <div className='signup'>
             <div className="container-fluid">
                 <div className="row align-items-center">
-                    <div className="col-7">
+                    <div className="col-sm-12 col-lg-7">
                         <img src={Logo} alt="" className='logo' />
                         <div className="container mt-5 relax">
                             <div className="signup-form w-50">
@@ -186,10 +186,7 @@ const SignUp = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-5 background-color">
-                        <Link className='color' to='/login'>
-                            <Button variant="contained" sx={{ mb: 5, width: '45ch', backgroundColor: "#00A95A" }}>Back for Login</Button>
-                        </Link>
+                    <div className="col-sm-12 col-lg-5 background-color">
                         <h2>Try Advanced features htmlFor 30 days</h2>
                         <p>Your 30-day trial of Advanced features includes:</p>
                         <div className="singn-icon ">
